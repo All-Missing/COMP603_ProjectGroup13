@@ -1,4 +1,4 @@
-package cashier;
+package COMP603_ProjectGroup13;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -13,13 +13,33 @@ import java.util.Scanner;
 public class SaveCashierFileRecords {
 
     private static Scanner scan = new Scanner(System.in);           
-     
+    private final HashMap<String, Double> cashier_records = new HashMap<>();
+
     public SaveCashierFileRecords()
     {
-         
+        
     }
+    
+    //Cashier receipt is recorded
+    public HashMap<String, Double> getCashierRecord() {
+        return cashier_records;
+    }
+    
+    //Add each cart_orderID and each cashier object in cashier_records
+    public void addCashierRecord(int order_id, Cashier cashier)
+    {
+        if (!(cashier.carts.isEmpty()) && cashier.getCartSize() > 0)
+        {
+            String str_order_id = String.valueOf(order_id);
+            double bill = cashier.getBill();            
+            this.cashier_records.put(str_order_id, bill);
+        }    
+        else
+            System.out.println("There are no cart_orderID recorded.");      
+    }
+    
        
-   public void saveFileRecord(HashMap<String, Double> cashier_records, String shift_id, String staff_id, String staff_name) {
+    public void saveFileRecord(HashMap<String, Double> cashier_records, String shift_id, String staff_id, String staff_name) {
        HashMap<String, Double> aCashierRecords = cashier_records;
        String aShiftID = shift_id;
        String aStaffID = staff_id;
@@ -57,7 +77,7 @@ public class SaveCashierFileRecords {
             {   System.out.println("Interrupted file. Cannot save this file!");
             }
     }
-            
+     
 }
     
     

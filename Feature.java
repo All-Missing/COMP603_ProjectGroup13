@@ -1,4 +1,4 @@
-package cashier;
+package COMP603_ProjectGroup13;
 
 public interface Feature {
     
@@ -7,6 +7,5 @@ public interface Feature {
     public void refresh();
     public String print_receipt();
     public double total_price();
-    public void payment(double amount, boolean endOfTransaction);
     
 }

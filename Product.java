@@ -1,28 +1,28 @@
-package cashier;
+package COMP603_ProjectGroup13;
 
 public class Product extends PointOfSale {
 
     private String item;
     private String item_id;
-    
+    private String category;
+
 //    public Product()
 //    {
 //        
 //    }
-    
-    public Product(String item, double price)
-    {
-        this.setItem(item);
-        this.itemPrice = price;
-    }
-    
-    public Product(String item_id, String Item, double itemPrice)
-    {
+//    public Product(String item_id, String Item, double itemPrice)
+//    {
+//        this.setItem_id(item_id);
+//        this.setItem(item);
+//        this.itemPrice = itemPrice;
+//    }
+    public Product(String item_id, String Item, double itemPrice, String category) {
         this.setItem_id(item_id);
         this.setItem(Item);
-        this.setItemPrice(itemPrice);
+        this.itemPrice = itemPrice;
+        this.setCategory(category);
     }
-    
+
     //-------------------------------------
     public String getItem_id() {
         return item_id;
@@ -30,38 +30,45 @@ public class Product extends PointOfSale {
 
     public void setItem_id(String item_id) {
         this.item_id = item_id;
-    }                
-    
+    }
+
     public String getItem() {
         return item;
     }
 
-    /**
-     * @param item the item to set
-     */
     public void setItem(String item) {
         this.item = item;
     }
-    
-    public void setItemPrice(double itemPrice)
-    {
+
+    public void setItemPrice(double itemPrice) {
         this.itemPrice = itemPrice;
     }
-    
-    public double getItemPrice()
-    {
+
+    public double getItemPrice() {
         return this.itemPrice;
     }
-    
-    public void set_quantity(int amount)
-    {
+
+    public void set_quantity(int amount) {
         this.amount = amount;
     }
-    
-    public double get_quantity()
-    {
+
+    //get product quantity
+    public int get_quantity() {
         return this.quantity;
     }
+
+    //set product quantity
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
     //------------------------------------
-   
 }

@@ -1,4 +1,4 @@
-package cashier;
+package COMP603_ProjectGroup13;
 
 import java.util.Scanner;
 

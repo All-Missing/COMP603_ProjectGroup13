@@ -1,4 +1,4 @@
-package cashier;
+package COMP603_ProjectGroup13;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -34,8 +34,9 @@ public class ProductList {
                 String product_id = lineParts[0];
                 String product_name = lineParts[1];
                 double product_price = Double.parseDouble(lineParts[2].trim());
-
-                Product load_product = new Product(product_id, product_name, product_price);
+                String category = lineParts[3];
+                
+                Product load_product = new Product(product_id, product_name, product_price, category);
                 //load_product.setItem_id(product_id);                  
                 getProduct_records().put(product_id, load_product);
             }

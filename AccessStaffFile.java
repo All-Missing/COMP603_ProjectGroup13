@@ -1,4 +1,4 @@
-package cashier;
+package COMP603_ProjectGroup13;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -47,12 +47,12 @@ public class AccessStaffFile {
                     System.out.println("user: "+entry.getValue()+" "+"login succeed!");
                     isValid = true;                    
                     //Invoking sale process!
-                    Cashier cashier = new Cashier();
+                    SaleProcess saleProcess = new SaleProcess();
                     
                     //Invoking ProductList constructor to call load_product_list()
                     ProductList productList = new ProductList(); 
                     product_records = productList.getProduct_records();
-                    cashier.saleProcess(product_records);
+                    saleProcess.saleProcess(product_records);
                     
                     //Notify user has exist the sale process successfully
                     System.out.println();                    
@@ -61,7 +61,7 @@ public class AccessStaffFile {
                     
                     //Retrive values bill_records,shift_id, staff_id, staff_name
                     // and ready to print out it on text file which used BufferedWriterter class
-                    bill_records = cashier.getCashierRecord(); //Load cashier reports                   
+                    bill_records = saveRecords.getCashierRecord(); //Load cashier reports                   
                                                            
                     //Invoking logOut_staffID with 4 parameters retrieved above
                     logOut_staffID(bill_records, shift_id, staff_id, staff_name);
@@ -105,7 +105,7 @@ public class AccessStaffFile {
                         switch(user_option)
                         {
                             case 1://Save file writer
-                                saveRecords.saveFileRecord(cashier_records,shift_id ,staff_id, staff_name);
+                                saveRecords.saveFileRecord(cashier_records, shift_id , staff_id, staff_name);
                                 System.out.println("File is saved sucessfully!");
                                 break;                            
                             case 2:  //Exit the whole system after the shift is ended
