@@ -31,7 +31,7 @@ public class Staff_Record {
         {            
             br = new BufferedReader(new FileReader("./file_records/Staff_Records.txt"));
             String line ="";
-            while((line = br.readLine()) != null)
+            while ((line = br.readLine()) != null)
             {
                 String[] lineParts = line.split(" ");
                 Staff_Record.staff_list.put(lineParts[0], lineParts[1]);                
