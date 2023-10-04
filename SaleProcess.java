@@ -12,7 +12,7 @@ import java.util.Set;
 public class SaleProcess {
 
     private static Scanner scan = new Scanner(System.in);
-    private Cashier cashier;
+    private Cashier cashier; //-< This is bug!›
     private static SaveCashierFileRecords saveRecords;
     public DecimalFormat df = new DecimalFormat("#.00");
 
