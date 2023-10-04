@@ -36,6 +36,7 @@ public final class CashierDBManager {
         {   try
             {  conn = DriverManager.getConnection(URL, USER_NAME, PASSWORD);
                 System.out.println(URL+"connected...");
+                System.out.println("CashierDatabase connected successfully");
             }
             catch (SQLException e)
             {   System.out.println(e.getMessage());
