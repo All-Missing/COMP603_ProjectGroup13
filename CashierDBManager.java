@@ -10,8 +10,8 @@ public final class CashierDBManager {
     
     private static final String USER_NAME = "allmissing";
     private static final String PASSWORD = "pdc";
-//    private static final String URL = "jdbc:derby://localhost:1527/CashierDB;";
-    private static final String URL = "jdbc:derby:CashierDB_Ebd; create=true";
+    private static final String URL = "jdbc:derby://localhost:1527/CashierDB;";
+//    private static final String URL = "jdbc:derby:CashierDB_Ebd; create=true";
     
     Connection conn;
     
