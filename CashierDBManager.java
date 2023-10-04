@@ -10,8 +10,8 @@ public final class CashierDBManager {
     
     private static final String USER_NAME = "allmissing";
     private static final String PASSWORD = "pdc";
-    private static final String URL = "jdbc:derby://localhost:1527/CashierDB;";
-//    private static final String URL = "jdbc:derby:CashierDB; create=true";
+//    private static final String URL = "jdbc:derby://localhost:1527/CashierDB;";
+    private static final String URL = "jdbc:derby:CashierDB_Ebd; create=true";
     
     Connection conn;
     
@@ -36,7 +36,7 @@ public final class CashierDBManager {
         {   try
             {  conn = DriverManager.getConnection(URL, USER_NAME, PASSWORD);
                 System.out.println(URL+"connected...");
-                System.out.println("CashierDatabase connected successfully");
+                System.out.println("CashierDatabase connected successfully\n");
             }
             catch (SQLException e)
             {   System.out.println(e.getMessage());
