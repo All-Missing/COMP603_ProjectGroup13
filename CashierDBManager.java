@@ -52,7 +52,7 @@ public final class CashierDBManager {
                 System.out.println(ex.getMessage());
             }
         }     
-    }
+    }    
     
      public ResultSet queryCahierDB(String sql) {
 
