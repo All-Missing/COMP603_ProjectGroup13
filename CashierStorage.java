@@ -6,6 +6,7 @@ import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 import java.sql.ResultSet;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -20,7 +21,7 @@ public class CashierStorage {
     public CashierStorage() {
         dbManager = new CashierDBManager();
         conn = dbManager.getCashierDBConnection();
-        productList = new ProductList();
+        productList = new ProductList();        
     }
     
     public void createProductDB() {
@@ -38,8 +39,28 @@ public class CashierStorage {
             statement.executeUpdate(sqlTable);
             System.out.println("Table " + tableName +" created");
                        
-            //Retrieve product records
+            //Retrieve product records value
             HashMap<String, Product> product_records = productList.getProduct_records();
+            
+            //Insert sql table
+            for (Map.Entry<String, Product> entry: product_records.entrySet()) {
+                
+                String item_id = entry.getKey();
+                Product product = entry.getValue();
+                
+//                System.out.println("Item_id: "+item_id+" "
+//                                            +"Item: "+product.getItem()+" "
+//                                            +"Item Price: "+product.getItemPrice()+" "
+//                                            +"Catagory: "+product.getCategory());
+                String insertQuery = "INSERT INTO " + tableName + " VALUES ('"
+                        + item_id + "', '"
+                        + product.getItem() + "', "
+                        + product.getItemPrice() + ", '"
+                        + product.getCategory() + "')";
+                         
+                statement.executeUpdate(insertQuery);
+            }
+            
             
         } catch (SQLException ex) {
             Logger.getLogger(CashierStorage.class.getName()).log(Level.SEVERE, null, ex);
