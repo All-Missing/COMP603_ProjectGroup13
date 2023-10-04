@@ -6,16 +6,13 @@ public class Product extends PointOfSale {
     private String item_id;
     private String category;
 
-//    public Product()
-//    {
-//        
-//    }
-//    public Product(String item_id, String Item, double itemPrice)
-//    {
-//        this.setItem_id(item_id);
-//        this.setItem(item);
-//        this.itemPrice = itemPrice;
-//    }
+    public Product()
+    {
+        this.item = null;
+        this.item_id = null;
+        this.category = null;
+    }
+
     public Product(String item_id, String Item, double itemPrice, String category) {
         this.setItem_id(item_id);
         this.setItem(Item);
