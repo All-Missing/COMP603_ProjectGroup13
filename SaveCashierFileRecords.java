@@ -13,11 +13,11 @@ import java.util.Scanner;
 public class SaveCashierFileRecords {
 
     private static Scanner scan = new Scanner(System.in);           
-    private final HashMap<String, Double> cashier_records = new HashMap<>();
+    private final HashMap<String, Double> cashier_records;
 
     public SaveCashierFileRecords()
     {
-        
+        this.cashier_records = new HashMap<>();
     }
     
     //Cashier receipt is recorded
