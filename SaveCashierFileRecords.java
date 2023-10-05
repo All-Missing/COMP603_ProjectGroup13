@@ -17,7 +17,7 @@ public class SaveCashierFileRecords {
 
     public SaveCashierFileRecords()
     {
-        this.cashier_records = new HashMap<>();
+        this.cashier_records = new HashMap<>();        
     }
     
     //Cashier receipt is recorded
@@ -25,32 +25,36 @@ public class SaveCashierFileRecords {
         return cashier_records;
     }
     
-    //Add each cart_orderID and each cashier object in cashier_records
+    //Add each cart_orderID and each cashier object in cashier_records - works
     public void addCashierRecord(int order_id, Cashier cashier)
     {
         if (!(cashier.carts.isEmpty()) && cashier.getCartSize() > 0)
         {
             String str_order_id = String.valueOf(order_id);
-            double bill = cashier.getBill();            
-            this.cashier_records.put(str_order_id, bill);
+            double bill = cashier.getBill();
+            //Testing order_id & bill
+//            System.out.println("Test addCashierRecord!!!");
+//            System.out.println("str_order_id: "+str_order_id+"bill: "+bill);
+            
+            this.cashier_records.put(str_order_id, bill);            
         }    
         else
             System.out.println("There are no cart_orderID recorded.");      
     }
     
        
-    public void saveFileRecord(HashMap<String, Double> cashier_records, String shift_id, String staff_id, String staff_name) {
-       HashMap<String, Double> aCashierRecords = cashier_records;
+    public void saveFileRecord(String shift_id, String staff_id, String staff_name) {       
        String aShiftID = shift_id;
        String aStaffID = staff_id;
        String aStaffName = staff_name;
        
-       saveFileRecords(aCashierRecords, aShiftID, aStaffID, aStaffName);
+       saveFileRecords(aShiftID, aStaffID, aStaffName);
    } 
     
-   private void saveFileRecords(HashMap<String, Double> cashier_records, String shift_id, String staff_id, String staff_name)
+   private void saveFileRecords(String shift_id, String staff_id, String staff_name)
    {
-       double total_balance = 0;
+       String order_id;
+       double total_balance = 0;       
        BufferedWriter bw = null;
             try
             {                
@@ -61,10 +65,15 @@ public class SaveCashierFileRecords {
                 bw.write(line);
                 bw.newLine();
 
-                for (Map.Entry<String, Double> cashierEntry : cashier_records.entrySet())
+                for (Map.Entry<String, Double> cashierEntry : getCashierRecord().entrySet())
                 {
+                    order_id = cashierEntry.getKey();
                     total_balance += cashierEntry.getValue();
-                    line = "OrderID: " + cashierEntry.getKey() + " Bill: $" + cashierEntry.getValue();
+                    
+                    //Test out order_id and total_balance                    
+                    System.out.println("Test orderID and total_balance");                    
+                    line = "OrderID: " + order_id + " Bill: $" + total_balance;
+                    System.out.println(line);
                     bw.append(line);
                     bw.newLine();
                 }

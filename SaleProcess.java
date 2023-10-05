@@ -13,7 +13,7 @@ public class SaleProcess {
 
     private static Scanner scan = new Scanner(System.in);
     private Cashier cashier; //-< This is bug!›
-    private static SaveCashierFileRecords saveRecords;
+    private SaveCashierFileRecords saveRecords;
     public DecimalFormat df = new DecimalFormat("#.00");
 
     public SaleProcess() {

@@ -47,24 +47,24 @@ public class AccessStaffFile {
                     System.out.println("user: "+entry.getValue()+" "+"login succeed!");
                     isValid = true;                    
                     //Invoking sale process!
-                    SaleProcess saleProcess = new SaleProcess();
+                    SaleProcess saleProcessObj = new SaleProcess();
                     
                     //Invoking ProductList constructor to call load_product_list()
                     ProductList productList = new ProductList(); 
                     product_records = productList.getProduct_records();
-                    saleProcess.saleProcess(product_records);
+                    saleProcessObj.saleProcess(product_records);
                     
                     //Notify user has exist the sale process successfully
                     System.out.println();                    
                     System.out.println("The sale process exits successfully");
-                    System.out.println("Process log out system... Please wait a few minutes...");
+                    System.out.println("Process log out system... Please wait a few minutes...");                     
                     
                     //Retrive values bill_records,shift_id, staff_id, staff_name
                     // and ready to print out it on text file which used BufferedWriterter class
-                    bill_records = saveRecords.getCashierRecord(); //Load cashier reports                   
+                    bill_records = saveRecords.getCashierRecord(); //Load cashier reports //Problem here?                   
                                                            
                     //Invoking logOut_staffID with 4 parameters retrieved above
-                    logOut_staffID(bill_records, shift_id, staff_id, staff_name);
+                    logOut_staffID(shift_id, staff_id, staff_name);
                 }                                                
             }
             
@@ -74,11 +74,12 @@ public class AccessStaffFile {
         
     }
     
-    public static void logOut_staffID(HashMap<String, Double> cashier_records, String shift_id, String staff_id, String staff_name)
+    public static void logOut_staffID(String shift_id, String staff_id, String staff_name)
     {                               
         boolean isLoginValid = false;
         while (!isLoginValid)
         {
+            //Implement CUI log here - minor fix
             System.out.print("> staff name: ");            
             String check_staffName = scan.nextLine();
             System.out.print("> staff id: ");
@@ -105,7 +106,7 @@ public class AccessStaffFile {
                         switch(user_option)
                         {
                             case 1://Save file writer
-                                saveRecords.saveFileRecord(cashier_records, shift_id , staff_id, staff_name);
+                                saveRecords.saveFileRecord(shift_id , staff_id, staff_name);
                                 System.out.println("File is saved sucessfully!");
                                 break;                            
                             case 2:  //Exit the whole system after the shift is ended
