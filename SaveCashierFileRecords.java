@@ -64,21 +64,26 @@ public class SaveCashierFileRecords {
                 String line = "---ShiftID: " + shift_id + " " + "staffID: " + staff_id + " staffName: " + staff_name;
                 bw.write(line);
                 bw.newLine();
+                
+                //Test if cashier_record is empty
+                if (cashier_records.isEmpty())
+                    System.out.println("cashier_record is empty!");
+                else {
+                    for (Map.Entry<String, Double> entry : cashier_records.entrySet())
+                    {
+                        String current_order_id = entry.getKey();                    
+                        Double current_bill = entry.getValue();
+                        total_balance += current_bill;
 
-                for (Map.Entry<String, Double> cashierEntry : cashier_records.entrySet())
-                {
-                    String current_order_id = cashierEntry.getKey();                    
-                    Double current_bill = cashierEntry.getValue();
-                    total_balance += current_bill;
-                    
-                    line = "OrderID: " + current_order_id + " Bill: $" + current_bill;
+                        line = "OrderID: " + current_order_id + " Bill: $" + current_bill;
+                        bw.append(line);
+                        bw.newLine();
+                    }
+                    line = "\t\t---Total balance earned per shift: $" + total_balance;
                     bw.append(line);
                     bw.newLine();
+                    bw.close();                    
                 }
-                line = "\t\t---Total balance earned per shift: $" + total_balance;
-                bw.append(line);
-                bw.newLine();
-                bw.close();
             }
             catch (IOException ex)
             {
