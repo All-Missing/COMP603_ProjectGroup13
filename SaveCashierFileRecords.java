@@ -53,11 +53,11 @@ public class SaveCashierFileRecords {
     
    private void saveFileRecords(String shift_id, String staff_id, String staff_name)
    {
-       String order_id;
-       double total_balance = 0;       
+       double total_balance = 0;
        BufferedWriter bw = null;
             try
-            {                
+            {
+                
                 bw = new BufferedWriter(new FileWriter("./file_records/BillOrder_records.txt", true));
 
                 // First line of text file indicates staffID and staff name respectively
@@ -65,15 +65,10 @@ public class SaveCashierFileRecords {
                 bw.write(line);
                 bw.newLine();
 
-                for (Map.Entry<String, Double> cashierEntry : getCashierRecord().entrySet())
+                for (Map.Entry<String, Double> cashierEntry : cashier_records.entrySet())
                 {
-                    order_id = cashierEntry.getKey();
                     total_balance += cashierEntry.getValue();
-                    
-                    //Test out order_id and total_balance                    
-                    System.out.println("Test orderID and total_balance");                    
-                    line = "OrderID: " + order_id + " Bill: $" + total_balance;
-                    System.out.println(line);
+                    line = "OrderID: " + cashierEntry.getKey() + " Bill: $" + cashierEntry.getValue();
                     bw.append(line);
                     bw.newLine();
                 }
@@ -83,7 +78,8 @@ public class SaveCashierFileRecords {
                 bw.close();
             }
             catch (IOException ex)
-            {   System.out.println("Interrupted file. Cannot save this file!");
+            {
+                System.out.println("Interrupted file. Cannot save this file!");
             }
     }
      
