@@ -71,7 +71,7 @@ public class SaveCashierFileRecords {
                     Double current_bill = cashierEntry.getValue();
                     total_balance += current_bill;
                     
-                    line = "OrderID: " + cashierEntry.getKey() + " Bill: $" + cashierEntry.getValue();
+                    line = "OrderID: " + current_order_id + " Bill: $" + current_bill;
                     bw.append(line);
                     bw.newLine();
                 }
