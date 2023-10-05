@@ -43,7 +43,8 @@ public class SaveCashierFileRecords {
     }
     
        
-    public void saveFileRecord(String shift_id, String staff_id, String staff_name) {       
+    public void saveFileRecord(String shift_id, String staff_id, String staff_name) {
+        
        String aShiftID = shift_id;
        String aStaffID = staff_id;
        String aStaffName = staff_name;
