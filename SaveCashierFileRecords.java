@@ -67,7 +67,10 @@ public class SaveCashierFileRecords {
 
                 for (Map.Entry<String, Double> cashierEntry : cashier_records.entrySet())
                 {
-                    total_balance += cashierEntry.getValue();
+                    String current_order_id = cashierEntry.getKey();                    
+                    Double current_bill = cashierEntry.getValue();
+                    total_balance += current_bill;
+                    
                     line = "OrderID: " + cashierEntry.getKey() + " Bill: $" + cashierEntry.getValue();
                     bw.append(line);
                     bw.newLine();
