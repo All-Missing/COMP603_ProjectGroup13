@@ -47,12 +47,12 @@ public class AccessStaffFile {
                     System.out.println("user: "+entry.getValue()+" "+"login succeed!");
                     isValid = true;                    
                     //Invoking sale process!
-                    SaleProcess saleProcessObj = new SaleProcess();
+                    SaleProcess saleProcess = new SaleProcess();
                     
                     //Invoking ProductList constructor to call load_product_list()
                     ProductList productList = new ProductList(); 
                     product_records = productList.getProduct_records();
-                    saleProcessObj.saleProcess(product_records);
+                    saleProcess.saleProcess(product_records);
                     
                     //Notify user has exist the sale process successfully
                     System.out.println();                    
@@ -61,7 +61,7 @@ public class AccessStaffFile {
                     
                     //Retrive values bill_records,shift_id, staff_id, staff_name
                     // and ready to print out it on text file which used BufferedWriterter class
-                    bill_records = saveRecords.getCashierRecord(); //Load cashier reports //Problem here?                   
+                    bill_records = saleProcess.getCashierRecord(); //Load cashier reports //Problem here?                   
                                                            
                     //Invoking logOut_staffID with 4 parameters retrieved above
                     logOut_staffID(shift_id, staff_id, staff_name);
