@@ -9,16 +9,24 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
 
-public class SaleProcess {
+public class SaleProcess extends Cashier {
 
     private static Scanner scan = new Scanner(System.in);
-    private Cashier cashier; //-< This is bug!›
-    private SaveCashierFileRecords saveRecords;
-    public DecimalFormat df = new DecimalFormat("#.00");
-
-    public SaleProcess() {
-        saveRecords = new SaveCashierFileRecords();
+    private Cashier cashier;    
+    private DecimalFormat df = new DecimalFormat("#.00");
+    private static int NEXT_ORDER_ID = 1;
+    private int cart_order_id;
+    private double change;
+    private HashMap<String, Double> cashier_records;
+    
+    public SaleProcess() {        
         this.cashier = new Cashier();
+        this.cart_order_id = SaleProcess.NEXT_ORDER_ID;
+        this.cashier_records = new HashMap<>();
+    }
+    
+    public HashMap<String, Double> getCashierRecord() {
+        return cashier_records;
     }
     
     //purchase function to add product to cart
@@ -42,10 +50,7 @@ public class SaleProcess {
             Product purchaseFuel = checkFuel(product_records, checkProductInput);
             Product purchaseProduct = checkProduct(product_records, checkProductInput);
 
-            boolean productFound = false;
-            
-//          if(purchaseProduct != null && purchaseProduct.getCategory().equalsIgnoreCase("Fuel")))
-
+            boolean productFound = false;            
             if (purchaseFuel != null) {
                 
                 //fuel purchasable amount options
@@ -241,7 +246,7 @@ public class SaleProcess {
 
     public void paymentProcess(boolean endOfTransaction) {
         if (cashier.getCartSize() > 0) {   //if(this transaction is a success print receipt else terminate)
-            System.out.println("\nCartID: " + cashier.get_order_id() + "\nQuantity: " + cashier.getCartSize() + "\nTotal price: " + df.format(cashier.total_price()));
+            System.out.println("\nCartID: " + cart_order_id + "\nQuantity: " + cashier.getCartSize() + "\nTotal price: " + df.format(cashier.total_price()));
             //if cancel payment this is print causing error. No receipt was suppose to be print in case of cancelation
             //++method
             boolean isInputValid = false;
@@ -302,7 +307,8 @@ public class SaleProcess {
                         }
                         break;
                     case 2: //Option 2 pay by cash
-                        if (payAmount >= cashier.getBill()) {   //bug with change calculation
+                        if (payAmount >= cashier.getBill())
+                        {   //bug with change calculation
                             System.out.println("Pay by Cash...");
                             currentChange -= payAmount - cashier.getBill();
                             cashier.setAmountChange(currentChange);
@@ -311,7 +317,8 @@ public class SaleProcess {
                             currentChange = cashier.getChange();
                             this.transactionComplete(endOfTransaction, currentChange);
                             isValid = true;
-                        } else //If it is not enough balance, it make user put valid price again
+                        }
+                        else //If it is not enough balance, it make user put valid price again
                         {
                             System.out.println("Not enough balance");
                             System.out.println("Please try to input valid amount again!");
@@ -335,33 +342,33 @@ public class SaleProcess {
         }
     }
 
-    public void transactionComplete(boolean endOfTransaction, double amountChange) {
-        boolean isPaymentFinish = endOfTransaction; //Set the flag if payment is finished
-        int currentOrderID = 0;
+    public void transactionComplete(boolean endOfTransaction, double amountChange)
+    {  
+        this.change = amountChange;
+        boolean isPaymentFinish = endOfTransaction; //Set the flag if payment is finished        
         while (!isPaymentFinish) {
             System.out.println("1:Print Receipt\n2:Don't print receipt");
             System.out.print("\nDo you want to print a receipt? ");
             String userinput = scan.nextLine();
+            
             int option = 0;
-
-            try {
+            try
+            {
                 option = Integer.parseInt(userinput.trim());
-
                 switch (option) {
                     case 1: //Option 1 allow to print the receipt after transaction complete!                     
                         System.out.println("\nTransaction complete");
-                        saveRecords.addCashierRecord(cashier.get_order_id(), cashier);
-                        System.out.println(cashier.print_receipt() + " Total change: $ " + df.format(amountChange));
-                        currentOrderID += cashier.getCartSize(); //Increment cart_orderID after finish payment
-                        cashier.set_order_id(currentOrderID);
+                        addCashierRecord(cart_order_id, this.cashier);
+                        System.out.println(print_receipt());                        
+                        cart_order_id += SaleProcess.NEXT_ORDER_ID++;
                         cashier.refresh();
                         isPaymentFinish = true;
                         break;
                     case 2: //Option 2 don't need to print receipt
                         System.out.println("Transction complete!");
-                        saveRecords.addCashierRecord(cashier.get_order_id(), cashier);
-                        currentOrderID += cashier.get_order_id(); //Increment cart_orderID after finish payment
-                        cashier.set_order_id(currentOrderID);
+                        addCashierRecord(cart_order_id, this.cashier);
+                        System.out.println(print_receipt());
+                        cart_order_id += SaleProcess.NEXT_ORDER_ID++;
                         cashier.refresh();
                         isPaymentFinish = true;
                         break;
@@ -376,12 +383,37 @@ public class SaleProcess {
 
     //Staff user can print out the sale records, then report it back to the manager 
     public void printSaleRecord() {
-        for (Map.Entry<String, Double> entry : saveRecords.getCashierRecord().entrySet()) {
+        for (Map.Entry<String, Double> entry : cashier_records.entrySet()) {
             String order_id = entry.getKey();
             double bill_order = entry.getValue();
             //Print orderID and bill for each record
             System.out.println("OrderId: " + order_id + " Bill: $" + df.format(bill_order) + "\n");
         }
     }
-
+    
+       //Cashier receipt is recorded
+    
+    //Add each cart_orderID and each cashier object in cashier_records - works
+    public void addCashierRecord(int order_id, Cashier cashier)
+    {
+        if (!(cashier.carts.isEmpty()) && cashier.getCartSize() > 0)
+        {
+            String str_order_id = String.valueOf(order_id);
+            double bill = cashier.getBill();            
+            cashier_records.put(str_order_id, bill);
+        }    
+        else
+            System.out.println("There are no cart_orderID recorded.");      
+    }
+    
+    @Override
+    public String print_receipt()
+    {  String out = "";
+        out += "--------------------------------------------\n";
+        out += "Cart order id: " + cart_order_id + "\n" + "Total Price: " +df.format(cashier.getBill())+"\n"
+                    + " Total change: $ " + df.format(change)+"\n";
+        out += "--------------------------------------------\n";
+        return out;
+    }
+    
 }

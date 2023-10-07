@@ -14,34 +14,12 @@ public class SaveCashierFileRecords {
 
     private static Scanner scan = new Scanner(System.in);           
     private final HashMap<String, Double> cashier_records;
-
+    private SaleProcess saleProcess;
     public SaveCashierFileRecords()
     {
-        this.cashier_records = new HashMap<>();        
-    }
-    
-    //Cashier receipt is recorded
-    public HashMap<String, Double> getCashierRecord() {
-        return cashier_records;
-    }
-    
-    //Add each cart_orderID and each cashier object in cashier_records - works
-    public void addCashierRecord(int order_id, Cashier cashier)
-    {
-        if (!(cashier.carts.isEmpty()) && cashier.getCartSize() > 0)
-        {
-            String str_order_id = String.valueOf(order_id);
-            double bill = cashier.getBill();
-            //Testing order_id & bill
-//            System.out.println("Test addCashierRecord!!!");
-//            System.out.println("str_order_id: "+str_order_id+"bill: "+bill);
-            
-            this.cashier_records.put(str_order_id, bill);            
-        }    
-        else
-            System.out.println("There are no cart_orderID recorded.");      
-    }
-    
+        this.saleProcess = new SaleProcess();
+        this.cashier_records = saleProcess.getCashierRecord();
+    }        
        
     public void saveFileRecord(String shift_id, String staff_id, String staff_name) {
         

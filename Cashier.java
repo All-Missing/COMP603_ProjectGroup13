@@ -9,9 +9,7 @@ public class Cashier implements Feature {
 
     
     private static Scanner scan = new Scanner(System.in);    
-    public DecimalFormat df = new DecimalFormat("#.00"); 
-    private static int INITIAL_CART_ORDER = 0;       
-    private int cart_orderID;    
+    public DecimalFormat df = new DecimalFormat("#.00");                
     List<Product> carts;
     private double bill;
     private int size; // navigate how much the size of ArrayList carts
@@ -24,8 +22,7 @@ public class Cashier implements Feature {
         this.carts = new ArrayList<>();
         this.size = 0;
         this.bill = 0;
-        this.amountChange = 0;       
-        this.cart_orderID = 1;         
+        this.amountChange = 0;                        
         this.product = null;
         this.fuelCost = 0;
     }
@@ -58,14 +55,6 @@ public class Cashier implements Feature {
         return this.carts;
     }
 
-    public int get_order_id() {
-        return cart_orderID;
-    }
-    
-    public void set_order_id(int cart_orderID) {
-        this.cart_orderID = cart_orderID;
-    }
-    
     public int getCartSize() {
         return size;
     }
@@ -98,9 +87,8 @@ public class Cashier implements Feature {
     @Override
     public String print_receipt()
     {
-        String out = "";
-        out += "orderID: " + get_order_id() + "\n";
-        out += "--------------------------------------------\n";
+        String out = "";        
+        
         for (Product p : getList()) 
             if(p.getCategory().equalsIgnoreCase("Fuel")) {
                 out += "Item: " + p.getItem() + " " + "Price per Liter: $" + df.format(p.getItemPrice()) 
