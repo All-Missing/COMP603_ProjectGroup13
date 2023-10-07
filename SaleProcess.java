@@ -17,7 +17,7 @@ public class SaleProcess extends Cashier {
     private static int NEXT_ORDER_ID = 1;
     private int cart_order_id;
     private double change;
-    private HashMap<String, Double> cashier_records;
+    private final HashMap<String, Double> cashier_records;
     
     public SaleProcess() {        
         this.cashier = new Cashier();
@@ -358,7 +358,7 @@ public class SaleProcess extends Cashier {
                 switch (option) {
                     case 1: //Option 1 allow to print the receipt after transaction complete!                     
                         System.out.println("\nTransaction complete");
-                        addCashierRecord(cart_order_id, this.cashier);
+                        addCashierRecord(cart_order_id, cashier);
                         System.out.println(print_receipt());                        
                         cart_order_id += SaleProcess.NEXT_ORDER_ID++;
                         cashier.refresh();
@@ -366,7 +366,7 @@ public class SaleProcess extends Cashier {
                         break;
                     case 2: //Option 2 don't need to print receipt
                         System.out.println("Transction complete!");
-                        addCashierRecord(cart_order_id, this.cashier);
+                        addCashierRecord(cart_order_id, cashier);
                         System.out.println(print_receipt());
                         cart_order_id += SaleProcess.NEXT_ORDER_ID++;
                         cashier.refresh();
@@ -382,7 +382,8 @@ public class SaleProcess extends Cashier {
     }
 
     //Staff user can print out the sale records, then report it back to the manager 
-    public void printSaleRecord() {
+    public void printSaleRecord()
+    {
         for (Map.Entry<String, Double> entry : cashier_records.entrySet()) {
             String order_id = entry.getKey();
             double bill_order = entry.getValue();
@@ -396,21 +397,24 @@ public class SaleProcess extends Cashier {
     //Add each cart_orderID and each cashier object in cashier_records - works
     public void addCashierRecord(int order_id, Cashier cashier)
     {
-        if (!(cashier.carts.isEmpty()) && cashier.getCartSize() > 0)
-        {
-            String str_order_id = String.valueOf(order_id);
-            double bill = cashier.getBill();            
-            cashier_records.put(str_order_id, bill);
-        }    
-        else
-            System.out.println("There are no cart_orderID recorded.");      
+//        if (cashier.getCartSize() > 0)
+//        {
+//        }    
+//        else
+//            System.out.println("There are no cart_orderID recorded.");
+        
+        String str_order_id = String.valueOf(order_id);
+        double bill = cashier.getBill();            
+        cashier_records.put(str_order_id, bill);
+        System.out.println(str_order_id +" "+ bill);
     }
     
     @Override
     public String print_receipt()
     {  String out = "";
         out += "--------------------------------------------\n";
-        out += "Cart order id: " + cart_order_id + "\n" + "Total Price: " +df.format(cashier.getBill())+"\n"
+        out += "Cart order id: " + cart_order_id + "\n" + super.print_receipt()
+                    + "Total Price: " +df.format(cashier.getBill())+"\n"
                     + " Total change: $ " + df.format(change)+"\n";
         out += "--------------------------------------------\n";
         return out;

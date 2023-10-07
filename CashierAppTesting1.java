@@ -34,10 +34,8 @@ public class CashierAppTesting1 {
             else
             {   System.out.println("Invalid input, Please answer (y/n) !");               
             }
-            
+                                    
         }              
-    }
+    }        
     
 }
-
-//Check bug cartID after paying and cancel. If it cancel still record the latest purchase cart_ID

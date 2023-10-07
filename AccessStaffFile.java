@@ -64,7 +64,7 @@ public class AccessStaffFile {
                     bill_records = saleProcess.getCashierRecord(); //Load cashier reports //Problem here?                   
                                                            
                     //Invoking logOut_staffID with 4 parameters retrieved above
-                    logOut_staffID(shift_id, staff_id, staff_name);
+                    logOut_staffID(bill_records, shift_id, staff_id, staff_name);
                 }                                                
             }
             
@@ -74,7 +74,7 @@ public class AccessStaffFile {
         
     }
     
-    public static void logOut_staffID(String shift_id, String staff_id, String staff_name)
+    public static void logOut_staffID(HashMap<String, Double> bill_records ,String shift_id, String staff_id, String staff_name)
     {                               
         boolean isLoginValid = false;
         while (!isLoginValid)
@@ -106,7 +106,7 @@ public class AccessStaffFile {
                         switch(user_option)
                         {
                             case 1://Save file writer
-                                saveRecords.saveFileRecord(shift_id , staff_id, staff_name);
+                                saveRecords.saveFileRecord(bill_records, shift_id , staff_id, staff_name);
                                 System.out.println("File is saved sucessfully!");
                                 break;                            
                             case 2:  //Exit the whole system after the shift is ended

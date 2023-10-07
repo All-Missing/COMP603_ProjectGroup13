@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -15,22 +16,24 @@ public class SaveCashierFileRecords {
     private static Scanner scan = new Scanner(System.in);           
     private final HashMap<String, Double> cashier_records;
     private SaleProcess saleProcess;
+    private DecimalFormat df = new DecimalFormat("#.00");
+    
     public SaveCashierFileRecords()
     {
         this.saleProcess = new SaleProcess();
         this.cashier_records = saleProcess.getCashierRecord();
     }        
        
-    public void saveFileRecord(String shift_id, String staff_id, String staff_name) {
-        
+    public void saveFileRecord(HashMap<String, Double> cashier_records, String shift_id, String staff_id, String staff_name) {
+               
        String aShiftID = shift_id;
        String aStaffID = staff_id;
        String aStaffName = staff_name;
        
-       saveFileRecords(aShiftID, aStaffID, aStaffName);
+       saveFileRecords(cashier_records, aShiftID, aStaffID, aStaffName);
    } 
     
-   private void saveFileRecords(String shift_id, String staff_id, String staff_name)
+   private void saveFileRecords(HashMap<String, Double> cashier_records ,String shift_id, String staff_id, String staff_name)
    {
        double total_balance = 0;
        BufferedWriter bw = null;
@@ -54,11 +57,11 @@ public class SaveCashierFileRecords {
                         Double current_bill = entry.getValue();
                         total_balance += current_bill;
 
-                        line = "OrderID: " + current_order_id + " Bill: $" + current_bill;
+                        line = "OrderID: " + current_order_id + " Bill: $" + df.format(current_bill);
                         bw.append(line);
                         bw.newLine();
                     }
-                    line = "\t\t---Total balance earned per shift: $" + total_balance;
+                    line = "\t\t---Total balance earned per shift: $" + df.format(total_balance);
                     bw.append(line);
                     bw.newLine();
                     bw.close();                    
