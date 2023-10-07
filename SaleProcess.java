@@ -14,14 +14,14 @@ public class SaleProcess extends Cashier {
     private static Scanner scan = new Scanner(System.in);
     private Cashier cashier;    
     private DecimalFormat df = new DecimalFormat("#.00");
-    private static int NEXT_ORDER_ID = 1;
+    private static int NEXT_ORDER_ID = 0;
     private int cart_order_id;
     private double change;
     private final HashMap<String, Double> cashier_records;
     
     public SaleProcess() {        
         this.cashier = new Cashier();
-        this.cart_order_id = SaleProcess.NEXT_ORDER_ID;
+        this.cart_order_id = SaleProcess.NEXT_ORDER_ID++;
         this.cashier_records = new HashMap<>();
     }
     
@@ -360,7 +360,7 @@ public class SaleProcess extends Cashier {
                         System.out.println("\nTransaction complete");
                         addCashierRecord(cart_order_id, cashier);
                         System.out.println(print_receipt());                        
-                        cart_order_id += SaleProcess.NEXT_ORDER_ID++;
+                        cart_order_id = SaleProcess.NEXT_ORDER_ID++;
                         cashier.refresh();
                         isPaymentFinish = true;
                         break;
@@ -368,7 +368,7 @@ public class SaleProcess extends Cashier {
                         System.out.println("Transction complete!");
                         addCashierRecord(cart_order_id, cashier);
                         System.out.println(print_receipt());
-                        cart_order_id += SaleProcess.NEXT_ORDER_ID++;
+                        cart_order_id = SaleProcess.NEXT_ORDER_ID++;
                         cashier.refresh();
                         isPaymentFinish = true;
                         break;
@@ -397,6 +397,7 @@ public class SaleProcess extends Cashier {
     //Add each cart_orderID and each cashier object in cashier_records - works
     public void addCashierRecord(int order_id, Cashier cashier)
     {
+        //There are bugs when put str_order_id bill cashier_records in if block condition
 //        if (cashier.getCartSize() > 0)
 //        {
 //        }    
@@ -406,16 +407,16 @@ public class SaleProcess extends Cashier {
         String str_order_id = String.valueOf(order_id);
         double bill = cashier.getBill();            
         cashier_records.put(str_order_id, bill);
-        System.out.println(str_order_id +" "+ bill);
+
     }
     
     @Override
     public String print_receipt()
     {  String out = "";
         out += "--------------------------------------------\n";
-        out += "Cart order id: " + cart_order_id + "\n" + super.print_receipt()
-                    + "Total Price: " +df.format(cashier.getBill())+"\n"
-                    + " Total change: $ " + df.format(change)+"\n";
+        out += "Cart order id: " + cart_order_id + "\n" + cashier.print_receipt()
+                    + "\t\tTotal Price: " +df.format(cashier.getBill())+"\n"
+                    + " \t\tTotal change: $ " + df.format(change)+"\n";
         out += "--------------------------------------------\n";
         return out;
     }

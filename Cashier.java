@@ -98,9 +98,6 @@ public class Cashier implements Feature {
                         + " " + "Cost: $" + df.format(p.getItemPrice())  + "\n";
             }
 
-        out += "--------------------------------------------\n";
-        out += "Total Price: $" + df.format(total_price());
-        out += "\n";
         return out;
     }
 
