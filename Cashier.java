@@ -10,7 +10,7 @@ public class Cashier implements Feature {
     
     private static Scanner scan = new Scanner(System.in);    
     public DecimalFormat df = new DecimalFormat("#.00");                
-    List<Product> carts;
+    private List<Product> carts;
     private double bill;
     private int size; // navigate how much the size of ArrayList carts
     private Product product;  

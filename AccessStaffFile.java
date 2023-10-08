@@ -9,7 +9,7 @@ public class AccessStaffFile {
     private static Scanner scan;
     private static HashMap<String, String> staffList;
     private final Staff_Record staff_records;
-    private int retrieve_shift_id = 0;
+    private int retrieve_shift_id;
     private HashMap<String, Product> product_records;
     private HashMap<String, Double> bill_records;    
     private static SaveCashierFileRecords saveRecords;

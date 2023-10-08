@@ -359,8 +359,9 @@ public class SaleProcess extends Cashier {
                     case 1: //Option 1 allow to print the receipt after transaction complete!                     
                         System.out.println("\nTransaction complete");
                         addCashierRecord(cart_order_id, cashier);
-                        System.out.println(print_receipt());                        
-                        cart_order_id = SaleProcess.NEXT_ORDER_ID++;
+                        System.out.println(print_receipt());
+                        cart_order_id++;
+//                        cart_order_id = SaleProcess.NEXT_ORDER_ID++;
                         cashier.refresh();
                         isPaymentFinish = true;
                         break;
@@ -368,7 +369,8 @@ public class SaleProcess extends Cashier {
                         System.out.println("Transction complete!");
                         addCashierRecord(cart_order_id, cashier);
                         System.out.println(print_receipt());
-                        cart_order_id = SaleProcess.NEXT_ORDER_ID++;
+                        cart_order_id++;
+//                        cart_order_id = SaleProcess.NEXT_ORDER_ID++;
                         cashier.refresh();
                         isPaymentFinish = true;
                         break;
