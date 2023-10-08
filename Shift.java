@@ -2,7 +2,10 @@ package COMP603_ProjectGroup13;
 
 import java.util.Scanner;
 
-public class CashierAppTesting1 {
+public class Shift {
+    
+    private static int INITIAL_SHIFT_ORDER = 1;
+    private int shift_id;
     
     public static void main(String[] args) 
     {
