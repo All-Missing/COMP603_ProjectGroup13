@@ -400,7 +400,7 @@ public class SaleProcess extends Cashier {
     public void addCashierRecord(int order_id, Cashier cashier)
     {
         //There are bugs when put str_order_id bill cashier_records in if block condition
-//        if (cashier.getCartSize() > 0)
+//        if (!(cashier.carts.isEmpty()) && cashier.getCartSize() > 0)
 //        {
 //        }    
 //        else
