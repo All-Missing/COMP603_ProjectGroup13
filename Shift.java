@@ -5,13 +5,23 @@ import java.util.Scanner;
 public class Shift {
     
     private static int INITIAL_SHIFT_ORDER = 1;
+    private static Scanner scan;   
     private int shift_id;
+    
+    public Shift() {
+        scan = new Scanner(System.in);
+        this.shift_id = Shift.INITIAL_SHIFT_ORDER++;
+    }
     
     public static void main(String[] args) 
     {
-        Scanner scan = new Scanner(System.in);
-     
-        int shift_id = 1;  // Initialize shift_id to 1
+        Shift shift = new Shift();
+        shift.processLogin();
+    }
+    
+    public void processLogin()
+    {        
+//        int shift_id = 1;  // Initialize shift_id to 1
         boolean isStartNewShift = false;
         while (!isStartNewShift)
         {
@@ -32,13 +42,20 @@ public class Shift {
             {
                AccessStaffFile accessStaffFile = new AccessStaffFile(shift_id);
                accessStaffFile.loginStaff_ID();
-               shift_id++;
+               shift_id = Shift.INITIAL_SHIFT_ORDER++;
             }
             else
             {   System.out.println("Invalid input, Please answer (y/n) !");               
             }
                                     
-        }              
-    }        
+        }
+    }
+    
+    public int checkFile() {
+        
+        
+        
+        return 0;
+    }
     
 }
