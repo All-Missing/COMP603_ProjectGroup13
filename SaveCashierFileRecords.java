@@ -25,7 +25,8 @@ public class SaveCashierFileRecords {
     }        
        
     public void saveFileRecord(HashMap<String, Double> cashier_records, String shift_id, String staff_id, String staff_name) {
-               
+        
+        //Condition 
        String aShiftID = shift_id;
        String aStaffID = staff_id;
        String aStaffName = staff_name;

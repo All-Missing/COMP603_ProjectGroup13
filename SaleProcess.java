@@ -21,13 +21,14 @@ public class SaleProcess extends Cashier {
     
     public SaleProcess() {        
         this.cashier = new Cashier();
-        this.cart_order_id = SaleProcess.NEXT_ORDER_ID++;
+        this.cart_order_id = SaleProcess.NEXT_ORDER_ID;
         this.cashier_records = new HashMap<>();
     }
     
     public HashMap<String, Double> getCashierRecord() {
         return cashier_records;
     }
+        
     
     //purchase function to add product to cart
     public void purchase(HashMap<String, Product> product_records) {
@@ -42,9 +43,8 @@ public class SaleProcess extends Cashier {
             String checkProductInput = scan.nextLine().trim();
 
             //exit purchase when enter "x"
-            if (checkProductInput.equalsIgnoreCase("x")) {
-                break;
-            }
+            if (checkProductInput.equalsIgnoreCase("x"))
+                break;            
 
             //check if product match with item record in product records
             Product purchaseFuel = checkFuel(product_records, checkProductInput);
@@ -54,8 +54,7 @@ public class SaleProcess extends Cashier {
             if (purchaseFuel != null) {
                 
                 //fuel purchasable amount options
-                Set<Integer> validOptions = new HashSet<>(Arrays.asList(10, 20, 30, 40, 50, 60, 70));
-                    
+                Set<Integer> validOptions = new HashSet<>(Arrays.asList(10, 20, 30, 40, 50, 60, 70));                    
                 try {
                     System.out.println("Fuel Options: 10L, 20L, 30L, 40L, 50L, 60L, 70L");
                     System.out.print("Select an option: ");
@@ -79,9 +78,8 @@ public class SaleProcess extends Cashier {
                         cashier.addToCart(new Product(purchaseFuel.getItem_id(), purchaseFuel.getItem(), purchaseFuel.getItemPrice(), purchaseFuel.getCategory()));
 
                         productFound = true;
-                    } else {
-                        System.out.println("\nInvalid option. Please select a valid fuel option (10L, 20L, 30L, 40L, 50L, 60L, 70L).");
-                    }
+                    } else
+                        System.out.println("\nInvalid option. Please select a valid fuel option (10L, 20L, 30L, 40L, 50L, 60L, 70L).");                    
                     
                 } catch (InputMismatchException e) {
                     System.out.println("\nInvalid input. Please enter a valid input.");
@@ -358,19 +356,17 @@ public class SaleProcess extends Cashier {
                 switch (option) {
                     case 1: //Option 1 allow to print the receipt after transaction complete!                     
                         System.out.println("\nTransaction complete");
-                        addCashierRecord(cart_order_id, cashier);
+                        cart_order_id = ++SaleProcess.NEXT_ORDER_ID;
                         System.out.println(print_receipt());
-                        cart_order_id++;
-//                        cart_order_id = SaleProcess.NEXT_ORDER_ID++;
+                        addCashierRecord(cart_order_id, cashier);
                         cashier.refresh();
                         isPaymentFinish = true;
                         break;
                     case 2: //Option 2 don't need to print receipt
                         System.out.println("Transction complete!");
-                        addCashierRecord(cart_order_id, cashier);
+                        cart_order_id = ++SaleProcess.NEXT_ORDER_ID;
                         System.out.println(print_receipt());
-                        cart_order_id++;
-//                        cart_order_id = SaleProcess.NEXT_ORDER_ID++;
+                        addCashierRecord(cart_order_id, cashier);
                         cashier.refresh();
                         isPaymentFinish = true;
                         break;
@@ -422,5 +418,7 @@ public class SaleProcess extends Cashier {
         out += "--------------------------------------------\n";
         return out;
     }
+    
+    
     
 }

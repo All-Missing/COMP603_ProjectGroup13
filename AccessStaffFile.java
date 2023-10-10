@@ -16,8 +16,8 @@ public class AccessStaffFile {
     
     public AccessStaffFile(int shift_id) {
         saveRecords = new SaveCashierFileRecords();
-        this.product_records = new HashMap<>();
         scan = new Scanner(System.in);
+        this.product_records = new HashMap<>();
         this.staff_records = new Staff_Record();
         this.retrieve_shift_id = shift_id;
         this.bill_records = new HashMap<>();
@@ -44,7 +44,7 @@ public class AccessStaffFile {
                 {
                     String staff_name = entry.getKey();
                     String staff_id = entry.getValue();
-                    System.out.println("user: "+entry.getValue()+" "+"login succeed!");
+                    System.out.println("user: "+entry.getValue()+" "+"login succeed!\n");
                     isValid = true;                    
                     //Invoking sale process!
                     SaleProcess saleProcess = new SaleProcess();
@@ -54,8 +54,7 @@ public class AccessStaffFile {
                     product_records = productList.getProduct_records();
                     saleProcess.saleProcess(product_records);
                     
-                    //Notify user has exist the sale process successfully
-                    System.out.println();                    
+                    //Notify user has exist the sale process successfully                                       
                     System.out.println("The sale process exits successfully");
                     System.out.println("Process log out system... Please wait a few minutes...");                     
                     
@@ -66,8 +65,7 @@ public class AccessStaffFile {
                     //Invoking logOut_staffID with 4 parameters retrieved above
                     logOut_staffID(bill_records, shift_id, staff_id, staff_name);
                 }                                                
-            }
-            
+            }            
             if (!isValid)
                 System.out.println("Invalid input! Pls enter valid staff_id again!");                                        
         }
