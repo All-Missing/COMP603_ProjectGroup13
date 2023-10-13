@@ -8,7 +8,7 @@ class CheckShiftID {
     
     public int checkShiftID() {
         
-        int highestShiftID = 1;
+        int highestShiftID = 0;
         try {
             BufferedReader br = new BufferedReader(new FileReader("./file_records/BillOrder_Records.txt"));
             String line = "";
