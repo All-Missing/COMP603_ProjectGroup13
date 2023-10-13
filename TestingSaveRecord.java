@@ -28,7 +28,8 @@ public class TestingSaveRecord {
                
                                
         saveRecords.printSaleRecord();
-
+        CheckCartOrderID checkCart  = new CheckCartOrderID();
+        System.out.println("File is empty? "+checkCart.checkBillOrderRecord());
         
     }
     
