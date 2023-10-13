@@ -3,14 +3,17 @@ package COMP603_ProjectGroup13;
 import java.util.Scanner;
 
 public class Shift {
-    
-    private static int INITIAL_SHIFT_ORDER = 1;
+        
     private static Scanner scan;   
     private int shift_id;
+//    private static int INITIAL_SHIFT_ID = 1;
+    private CheckShiftID cShiftID;
     
     public Shift() {
         scan = new Scanner(System.in);
-        this.shift_id = Shift.INITIAL_SHIFT_ORDER++;
+        cShiftID = new CheckShiftID();
+        shift_id = cShiftID.checkShiftID();
+//        shift_id = Shift.INITIAL_SHIFT_ID;
     }
     
     public static void main(String[] args) 
@@ -21,7 +24,6 @@ public class Shift {
     
     public void processLogin()
     {        
-//        int shift_id = 1;  // Initialize shift_id to 1
         boolean isStartNewShift = false;
         while (!isStartNewShift)
         {
@@ -39,10 +41,10 @@ public class Shift {
                         
             //Check if user's answer is 'y' then process login staff_id 
             if (userInput.trim().equalsIgnoreCase("y"))
-            {
+            {                           
                AccessStaffFile accessStaffFile = new AccessStaffFile(shift_id);
                accessStaffFile.loginStaff_ID();
-               shift_id = Shift.INITIAL_SHIFT_ORDER++;
+               shift_id = cShiftID.checkShiftID();
             }
             else
             {   System.out.println("Invalid input, Please answer (y/n) !");               
@@ -50,12 +52,5 @@ public class Shift {
                                     
         }
     }
-    
-    public int checkFile() {
         
-        
-        
-        return 0;
-    }
-    
 }
