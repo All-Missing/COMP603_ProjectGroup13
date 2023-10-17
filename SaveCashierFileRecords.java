@@ -58,11 +58,11 @@ public class SaveCashierFileRecords {
                         Double current_bill = entry.getValue();
                         total_balance += current_bill;
 
-                        line = "OrderID: " + current_order_id + " Bill: $" + df.format(current_bill);
+                        line = "OrderID: " + current_order_id + " Bill: $ " + df.format(current_bill);
                         bw.append(line);
                         bw.newLine();
                     }
-                    line = "\t\t---Total balance earned per shift: $" + df.format(total_balance);
+                    line = "\t\t---Total balance earned per shift: $ " + df.format(total_balance);
                     bw.append(line);
                     bw.newLine();
                     bw.close();                    
