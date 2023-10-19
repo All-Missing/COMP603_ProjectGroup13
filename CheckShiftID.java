@@ -10,7 +10,7 @@ class CheckShiftID {
         
         int highestShiftID = 0;
         try {
-            BufferedReader br = new BufferedReader(new FileReader("./file_records/BillOrder_Records"));
+            BufferedReader br = new BufferedReader(new FileReader("./file_records/BillOrder_Records.txt"));
             String line = "";
             while ((line = br.readLine()) != null) {
                 if (line.startsWith("---ShiftID: ")) {
