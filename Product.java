@@ -12,6 +12,10 @@ public class Product extends PointOfSale {
         this.item_id = null;
         this.category = null;
     }
+    
+    public Product(String item_id) {
+        this.setItem_id(item_id);
+    }
 
     public Product(String item_id, String Item, double itemPrice, String category) {
         this.setItem_id(item_id);
@@ -66,6 +70,11 @@ public class Product extends PointOfSale {
     public void setCategory(String category) {
         this.category = category;
     }
-
+    
+    @Override
+    public String toString() {
+        return "ItemID: "+getItem_id()+" Item: "+getItem()
+                                +" Item price: "+getItemPrice()+" category:"+getCategory();
+    }
     //------------------------------------
 }
