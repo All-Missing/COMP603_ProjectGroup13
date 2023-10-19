@@ -18,10 +18,13 @@ public class SaleProcess extends Cashier {
     private int cart_order_id;
     private double change;
     private final HashMap<String, Double> cashier_records;
+    private CheckOrderID cOrderID;
     
     public SaleProcess() {        
         this.cashier = new Cashier();
-        this.cart_order_id = SaleProcess.NEXT_ORDER_ID;
+        cOrderID = new CheckOrderID();
+        SaleProcess.NEXT_ORDER_ID = cOrderID.checkOrderID();
+        this.cart_order_id = SaleProcess.NEXT_ORDER_ID;        
         this.cashier_records = new HashMap<>();
     }
     
@@ -386,7 +389,7 @@ public class SaleProcess extends Cashier {
             String order_id = entry.getKey();
             double bill_order = entry.getValue();
             //Print orderID and bill for each record
-            System.out.println("OrderId: " + order_id + " Bill: $" + df.format(bill_order) + "\n");
+            System.out.println("OrderId: " + order_id + " Bill: $ " + df.format(bill_order) + "\n");
         }
     }
     

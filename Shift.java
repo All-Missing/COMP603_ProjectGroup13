@@ -6,14 +6,12 @@ public class Shift {
         
     private static Scanner scan;   
     private int shift_id;
-//    private static int INITIAL_SHIFT_ID = 1;
     private CheckShiftID cShiftID;
     
     public Shift() {
         scan = new Scanner(System.in);
         cShiftID = new CheckShiftID();
         shift_id = cShiftID.checkShiftID();
-//        shift_id = Shift.INITIAL_SHIFT_ID;
     }
     
     public static void main(String[] args) 
