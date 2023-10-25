@@ -215,7 +215,8 @@ public class SaleProcess extends Cashier {
                         System.out.println("Cart has been refresh.");
                         cashier.refresh();
                         break;
-                    case 4: //Prompt to display item details in each cart
+                    case 4: //Prompt to display item details in each cart //
+                        //Something wrong with fuel with its price!
                         System.out.println("Display current item in cart:");
                         System.out.print(cashier.print_receipt());
                         break;

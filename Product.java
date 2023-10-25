@@ -72,6 +72,12 @@ public class Product extends PointOfSale {
     }
     
     @Override
+    public boolean equals(Object o) {
+        Product aProduct = (Product) o;        
+        return this.item_id.equalsIgnoreCase(aProduct.item_id);
+    }
+    
+    @Override
     public String toString() {
         return "ItemID: "+getItem_id()+" Item: "+getItem()
                                 +" Item price: "+getItemPrice()+" category:"+getCategory();
