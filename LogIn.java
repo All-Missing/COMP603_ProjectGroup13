@@ -4,140 +4,61 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-public class AccessStaffFile {
+public class LogIn {
 
     private static Scanner scan;
-    private static HashMap<String, String> staffList;
-    private final Staff_Record staff_records;
+    private HashMap<String, String> staffList;
     private int retrieve_shift_id;
-    private HashMap<String, Product> product_records;
-    private HashMap<String, Double> bill_records;    
-    private static SaveCashierFileRecords saveRecords;
+    private final Staff_Record staff_records;    
+    private RunSaleProcess rsProcess;
     
-    public AccessStaffFile(int shift_id) {
-        saveRecords = new SaveCashierFileRecords();
+    public LogIn(int shift_id) {        
         scan = new Scanner(System.in);
-        this.product_records = new HashMap<>();
         this.staff_records = new Staff_Record();
         this.retrieve_shift_id = shift_id;
-        this.bill_records = new HashMap<>();
     }
-    
+
     //Login staff_ID
-    public void loginStaff_ID()
-    {
-        
-        //Staff records_ID
-        this.staffList = staff_records.getStaff_list();                      
-        //Prompt and display CUI
-        System.out.println("You are signing in to this POS.....");
-        System.out.println("Please wait... for a few seconds to connect the main system!");
-        String shift_id = String.valueOf(retrieve_shift_id); 
+    public void loginStaff_ID() {
+        this.staffList = staff_records.getStaff_list();      
+        // Prompt and display CUI
+        System.out.println("You are signing in to this POS...");
+        System.out.println("Please wait for a few seconds to connect to the main system!\n");
+        String shift_id = String.valueOf(retrieve_shift_id);
         boolean isValid = false;
-        while (!isValid)
-        {
-            System.out.print("Please enter your staff_ID: ");            
-            String userInput = scan.nextLine();            
-            for (Map.Entry<String, String> entry: staffList.entrySet())
-            {
-                if (entry.getValue().equals(userInput.trim())) 
-                {
-                    String staff_name = entry.getKey();
-                    String staff_id = entry.getValue();
-                    System.out.println("user: "+entry.getValue()+" "+"login succeed!\n");
-                    isValid = true;                    
-                    //Invoking sale process!
-                    SaleProcess saleProcess = new SaleProcess();
-                    
-                    //Invoking ProductList constructor to call load_product_list()
-                    ProductList productList = new ProductList(); 
-                    product_records = productList.getProduct_records();
-                    saleProcess.saleProcess(product_records);
-                    
-                    //Notify user has exist the sale process successfully                                       
-                    System.out.println("The sale process exits successfully");
-                    System.out.println("Process log out system... Please wait a few minutes...");                     
-                    
-                    //Retrive values bill_records,shift_id, staff_id, staff_name
-                    // and ready to print out it on text file which used BufferedWriterter class
-                    bill_records = saleProcess.getCashierRecord(); //Load cashier reports //Problem here?                   
-                                                           
-                    //Invoking logOut_staffID with 4 parameters retrieved above
-                    logOut_staffID(bill_records, shift_id, staff_id, staff_name);
-                }                                                
-            }            
-            if (!isValid)
-                System.out.println("Invalid input! Pls enter valid staff_id again!");                                        
-        }
-        
-    }
-    
-    public static void logOut_staffID(HashMap<String, Double> bill_records ,String shift_id, String staff_id, String staff_name)
-    {                               
-        boolean isLoginValid = false;
-        while (!isLoginValid)
-        {
-            //Implement CUI log here - minor fix
-            System.out.print("> staff name: ");            
-            String check_staffName = scan.nextLine();
-            System.out.print("> staff id: ");
-            String check_staffID = scan.nextLine();
-            System.out.println();
-            
-            if (check_staffID.trim().equals(staff_id) && check_staffName.trim().equalsIgnoreCase(staff_name))
-            {                                   
-                boolean isExit = false;
-                while (!isExit)
-                {
-                    notifyUser(staff_name, staff_id);                               
-                    String user_input = scan.nextLine();       
-                    int user_option;                    
-                    try
-                    {
-                        user_option = Integer.parseInt(user_input.trim());
-                        switch(user_option)
-                        {
-                            case 1://Save file writer
-                                saveRecords.saveFileRecord(bill_records, shift_id , staff_id, staff_name);
-                                System.out.println("File is saved sucessfully!");
-                                break;                            
-                            case 2:  //Exit the whole system after the shift is ended
-                                verifyLogOut(staff_id, staff_name);
-                                isExit = true;
-                                isLoginValid = true;
-                                break;
-                            default:
-                                break;
-                        }                        
-                    }
-                    catch (NumberFormatException e)
-                    {   System.out.println("Number format exception! Please enter valid input!");
-                    }                    
-                }
+
+        while (!isValid) {
+            System.out.println("NOTE! Press X to exit this function\n");
+            System.out.print("Please enter your staff_ID: ");
+            String userInputID = scan.nextLine().toLowerCase().trim();
+
+            //Exit function login staff.
+            if (userInputID.equalsIgnoreCase("x")) {
+                break;
             }
-            
-            //If its fail, this asks user to put valid input again.
-            if (!isLoginValid)
-            {   System.out.println("Log out failed! Please enter valid staffID and staff name again!");
-            }            
+
+            if (isValidStaff(userInputID)) {
+
+                // Extract staff_name and staff_id from the valid staff entry
+                for (Map.Entry<String, String> entry : staffList.entrySet()) {
+
+                    if (entry.getValue().equals(userInputID.trim())) {
+                        String staff_name = entry.getKey();
+                        String staff_id = entry.getValue();
+                        System.out.println("User: " + staff_id + " login succeeded!\n");
+                        isValid = true;
+                        //Starting Sale process
+                        rsProcess = new RunSaleProcess(shift_id, staff_id, staff_name);
+                    }
+                }
+            } else {
+                System.out.println("Invalid input! Please enter a valid staff_id as String type");
+            }
         }
-                
     }
-    
-    public static void notifyUser(String staff_name, String staff_id) {
-        System.out.println("Please follow up instructions for staff users.");
-                    System.out.println("1. Please save first before logging out!");                
-                    System.out.println("2.Log out\n");                     
-                    System.out.println("-----End of shift-----");
-                    System.out.println("Staff name: "+staff_name+" Staff_id: "+staff_id);                    
-                    System.out.print("> Staff choice: ");
+
+    private boolean isValidStaff(String staffID) {
+        return staffList.containsValue(staffID);
     }
-    
-    public static void verifyLogOut(String staff_id, String staff_name) {
-        System.out.println("Successfully log out for this staff "+staff_id+" - "+staff_name);
-                                System.out.println("-------------------------------------");
-                                System.out.println();
-                                
-    }
-    
+
 }
