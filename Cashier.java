@@ -87,17 +87,12 @@ public class Cashier implements Feature {
     @Override
     public String print_receipt()
     {
-        String out = "";        
-        
+        String out = "";               
         for (Product p : getList()) 
-            if(p.getCategory().equalsIgnoreCase("Fuel")) {
-                out += "Item: " + p.getItem() + " " + "Price per Liter: $" + df.format(p.getItemPrice()) 
-                        + " " + "Cost: $" + df.format(this.getFuelCost()) + "\n";
-            }else {
-                out += "Item: " + p.getItem() + " " + "Price per Item: $" + df.format(p.getItemPrice()) 
-                        + " " + "Cost: $" + df.format(p.getItemPrice())  + "\n";
-            }
-
+            if(p.getCategory().equalsIgnoreCase("Fuel"))
+                out += "Item: " + p.getItem() + " " + " " + "Cost: $" + df.format(p.getItemPrice()) + "\n";
+            else
+                out += "Item: " + p.getItem() + " " + "Cost: $" + df.format(p.getItemPrice())  + "\n";            
         return out;
     }
 
@@ -106,12 +101,12 @@ public class Cashier implements Feature {
     public double total_price()
     {
         double totalPrice = 0;
-        for (Product p : getList()) 
-            if(p.getCategory().equalsIgnoreCase("Fuel")) {
+        for (Product p : getList()) {
+            if(p.getCategory().equalsIgnoreCase("Fuel"))
                 totalPrice += this.getFuelCost();
-            }else {
-                totalPrice += p.getItemPrice();
-            }
+            else
+                totalPrice += p.getItemPrice();            
+        }
         
         this.bill = totalPrice;             
         return totalPrice;
