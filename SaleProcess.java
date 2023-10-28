@@ -12,27 +12,26 @@ import java.util.Set;
 public class SaleProcess extends Cashier {
 
     private static Scanner scan = new Scanner(System.in);
-    private Cashier cashier;    
+    private Cashier cashier;
     private DecimalFormat df = new DecimalFormat("#.00");
     private static int NEXT_ORDER_ID = 0;
     private int cart_order_id;
     private double change;
     private final HashMap<String, Double> cashier_records;
     private CheckOrderID cOrderID;
-    
-    public SaleProcess() {        
+
+    public SaleProcess() {
         this.cashier = new Cashier();
         cOrderID = new CheckOrderID();
         SaleProcess.NEXT_ORDER_ID = cOrderID.checkOrderID();
-        this.cart_order_id = SaleProcess.NEXT_ORDER_ID;        
+        this.cart_order_id = SaleProcess.NEXT_ORDER_ID;
         this.cashier_records = new HashMap<>();
     }
-    
+
     public HashMap<String, Double> getCashierRecord() {
         return cashier_records;
     }
-        
-    
+
     //purchase function to add product to cart
     public void purchase(HashMap<String, Product> product_records) {
         //Create an cashier instance obj after each purchase is invoked!
@@ -46,18 +45,19 @@ public class SaleProcess extends Cashier {
             String checkProductInput = scan.nextLine().trim();
 
             //exit purchase when enter "x"
-            if (checkProductInput.equalsIgnoreCase("x"))
-                break;            
+            if (checkProductInput.equalsIgnoreCase("x")) {
+                break;
+            }
 
             //check if product match with item record in product records
             Product purchaseFuel = checkFuel(product_records, checkProductInput);
             Product purchaseProduct = checkProduct(product_records, checkProductInput);
 
-            boolean productFound = false;            
+            boolean productFound = false;
             if (purchaseFuel != null) {
-                
+
                 //fuel purchasable amount options
-                Set<Integer> validOptions = new HashSet<>(Arrays.asList(10, 20, 30, 40, 50, 60, 70));                    
+                Set<Integer> validOptions = new HashSet<>(Arrays.asList(10, 20, 30, 40, 50, 60, 70));
                 try {
                     System.out.println("Fuel Options: 10L, 20L, 30L, 40L, 50L, 60L, 70L");
                     System.out.print("Select an option: ");
@@ -81,9 +81,10 @@ public class SaleProcess extends Cashier {
                         cashier.addToCart(new Product(purchaseFuel.getItem_id(), purchaseFuel.getItem(), purchaseFuel.getItemPrice(), purchaseFuel.getCategory()));
 
                         productFound = true;
-                    } else
-                        System.out.println("\nInvalid option. Please select a valid fuel option (10L, 20L, 30L, 40L, 50L, 60L, 70L).");                    
-                    
+                    } else {
+                        System.out.println("\nInvalid option. Please select a valid fuel option (10L, 20L, 30L, 40L, 50L, 60L, 70L).");
+                    }
+
                 } catch (InputMismatchException e) {
                     System.out.println("\nInvalid input. Please enter a valid input.");
                     scan.nextLine(); //clear invalid input
@@ -112,7 +113,7 @@ public class SaleProcess extends Cashier {
                     } else {
                         System.out.println("\nInvalid input. Please check if quantity input is correct.");
                     }
-                   
+
                 } catch (InputMismatchException e) {
                     System.out.println("\nInvalid input. Please enter a valid input.");
                     scan.nextLine(); // clear invalid input
@@ -309,8 +310,7 @@ public class SaleProcess extends Cashier {
                         }
                         break;
                     case 2: //Option 2 pay by cash
-                        if (payAmount >= cashier.getBill())
-                        {   //bug with change calculation
+                        if (payAmount >= cashier.getBill()) {   //bug with change calculation
                             System.out.println("Pay by Cash...");
                             currentChange -= payAmount - cashier.getBill();
                             cashier.setAmountChange(currentChange);
@@ -319,8 +319,7 @@ public class SaleProcess extends Cashier {
                             currentChange = cashier.getChange();
                             this.transactionComplete(endOfTransaction, currentChange);
                             isValid = true;
-                        }
-                        else //If it is not enough balance, it make user put valid price again
+                        } else //If it is not enough balance, it make user put valid price again
                         {
                             System.out.println("Not enough balance");
                             System.out.println("Please try to input valid amount again!");
@@ -344,18 +343,16 @@ public class SaleProcess extends Cashier {
         }
     }
 
-    public void transactionComplete(boolean endOfTransaction, double amountChange)
-    {  
+    public void transactionComplete(boolean endOfTransaction, double amountChange) {
         this.change = amountChange;
         boolean isPaymentFinish = endOfTransaction; //Set the flag if payment is finished        
         while (!isPaymentFinish) {
             System.out.println("1:Print Receipt\n2:Don't print receipt");
             System.out.print("\nDo you want to print a receipt? ");
             String userinput = scan.nextLine();
-            
+
             int option = 0;
-            try
-            {
+            try {
                 option = Integer.parseInt(userinput.trim());
                 switch (option) {
                     case 1: //Option 1 allow to print the receipt after transaction complete!                     
@@ -384,8 +381,7 @@ public class SaleProcess extends Cashier {
     }
 
     //Staff user can print out the sale records, then report it back to the manager 
-    public void printSaleRecord()
-    {
+    public void printSaleRecord() {
         for (Map.Entry<String, Double> entry : cashier_records.entrySet()) {
             String order_id = entry.getKey();
             double bill_order = entry.getValue();
@@ -393,36 +389,32 @@ public class SaleProcess extends Cashier {
             System.out.println("OrderId: " + order_id + " Bill: $ " + df.format(bill_order) + "\n");
         }
     }
-    
-       //Cashier receipt is recorded
-    
+
+    //Cashier receipt is recorded
     //Add each cart_orderID and each cashier object in cashier_records - works
-    public void addCashierRecord(int order_id, Cashier cashier)
-    {
+    public void addCashierRecord(int order_id, Cashier cashier) {
         //There are bugs when put str_order_id bill cashier_records in if block condition
 //        if (!(cashier.carts.isEmpty()) && cashier.getCartSize() > 0)
 //        {
 //        }    
 //        else
 //            System.out.println("There are no cart_orderID recorded.");
-        
+
         String str_order_id = String.valueOf(order_id);
-        double bill = cashier.getBill();            
+        double bill = cashier.getBill();
         cashier_records.put(str_order_id, bill);
 
     }
-    
+
     @Override
-    public String print_receipt()
-    {  String out = "";
+    public String print_receipt() {
+        String out = "";
         out += "--------------------------------------------\n";
         out += "Cart order id: " + cart_order_id + "\n" + cashier.print_receipt()
-                    + "\t\tTotal Price: " +df.format(cashier.getBill())+"\n"
-                    + " \t\tTotal change: $ " + df.format(change)+"\n";
+                + "\t\tTotal Price: " + df.format(cashier.getBill()) + "\n"
+                + " \t\tTotal change: $ " + df.format(change) + "\n";
         out += "--------------------------------------------\n";
         return out;
     }
-    
-    
-    
+
 }

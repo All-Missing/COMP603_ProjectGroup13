@@ -4,7 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
-class CheckShiftID {                   
+public class CheckShiftID {                   
     
     public int checkShiftID() {
         

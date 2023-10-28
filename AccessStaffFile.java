@@ -89,15 +89,9 @@ public class AccessStaffFile {
                 boolean isExit = false;
                 while (!isExit)
                 {
-                    System.out.println("Please follow up instructions for staff users.");
-                    System.out.println("1. Please save first before logging out!");                
-                    System.out.println("2.Log out\n");                     
-                    System.out.println("-----End of shift-----");                    
-                    System.out.println("Staff name: "+staff_name+" Staff_id: "+staff_id);                    
-                    System.out.print("> Staff choice: ");
-                    String user_input = scan.nextLine();                    
-                    int user_option;
-                    
+                    notifyUser(staff_name, staff_id);                               
+                    String user_input = scan.nextLine();       
+                    int user_option;                    
                     try
                     {
                         user_option = Integer.parseInt(user_input.trim());
@@ -108,9 +102,7 @@ public class AccessStaffFile {
                                 System.out.println("File is saved sucessfully!");
                                 break;                            
                             case 2:  //Exit the whole system after the shift is ended
-                                System.out.println("Successfully log out for this staff "+staff_id+" - "+staff_name);
-                                System.out.println("-------------------------------------");
-                                System.out.println();
+                                verifyLogOut(staff_id, staff_name);
                                 isExit = true;
                                 isLoginValid = true;
                                 break;
@@ -130,6 +122,22 @@ public class AccessStaffFile {
             }            
         }
                 
+    }
+    
+    public static void notifyUser(String staff_name, String staff_id) {
+        System.out.println("Please follow up instructions for staff users.");
+                    System.out.println("1. Please save first before logging out!");                
+                    System.out.println("2.Log out\n");                     
+                    System.out.println("-----End of shift-----");
+                    System.out.println("Staff name: "+staff_name+" Staff_id: "+staff_id);                    
+                    System.out.print("> Staff choice: ");
+    }
+    
+    public static void verifyLogOut(String staff_id, String staff_name) {
+        System.out.println("Successfully log out for this staff "+staff_id+" - "+staff_name);
+                                System.out.println("-------------------------------------");
+                                System.out.println();
+                                
     }
     
 }
