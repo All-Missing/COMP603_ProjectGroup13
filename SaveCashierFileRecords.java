@@ -1,9 +1,6 @@
 package COMP603_ProjectGroup13;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.DecimalFormat;
@@ -12,9 +9,8 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class SaveCashierFileRecords {
-
-    private static Scanner scan = new Scanner(System.in);           
-    private final HashMap<String, Double> cashier_records;
+   
+    private HashMap<String, Double> cashier_records;
     private SaleProcess saleProcess;
     private DecimalFormat df = new DecimalFormat("#.00");
     

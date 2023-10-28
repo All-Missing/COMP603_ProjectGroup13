@@ -78,7 +78,7 @@ public class SaleProcess extends Cashier {
                         currentBill += costOfFuel;
                         cashier.setBill(currentBill);
 
-                        cashier.addToCart(new Product(purchaseFuel.getItem_id(), purchaseFuel.getItem(), purchaseFuel.getItemPrice(), purchaseFuel.getCategory()));
+                        cashier.addToCart(new Product(purchaseFuel.getItem_id(), purchaseFuel.getItem(), costOfFuel, purchaseFuel.getCategory()));
 
                         productFound = true;
                     } else {
@@ -249,7 +249,7 @@ public class SaleProcess extends Cashier {
 
     public void paymentProcess(boolean endOfTransaction) {
         if (cashier.getCartSize() > 0) {   //if(this transaction is a success print receipt else terminate)
-            System.out.println("\nCartID: " + cart_order_id + "\nQuantity: " + cashier.getCartSize() + "\nTotal price: " + df.format(cashier.total_price()));
+            System.out.println("\nCartID: " + (cart_order_id+ 1) + "\nQuantity: " + cashier.getCartSize() + "\nTotal price: " + df.format(cashier.total_price()));
             //if cancel payment this is print causing error. No receipt was suppose to be print in case of cancelation
             //++method
             boolean isInputValid = false;

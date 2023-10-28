@@ -82,5 +82,5 @@ public class Product extends PointOfSale {
         return "ItemID: "+getItem_id()+" Item: "+getItem()
                                 +" Item price: "+getItemPrice()+" category:"+getCategory();
     }
-    //------------------------------------
+    
 }

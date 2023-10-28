@@ -40,14 +40,12 @@ public class Shift {
             //Check if user's answer is 'y' then process login staff_id 
             if (userInput.trim().equalsIgnoreCase("y"))
             {                           
-               AccessStaffFile accessStaffFile = new AccessStaffFile(shift_id);
-               accessStaffFile.loginStaff_ID();
+               LogIn login = new LogIn(shift_id);
+               login.loginStaff_ID();
                shift_id = cShiftID.checkShiftID();
             }
             else
-            {   System.out.println("Invalid input, Please answer (y/n) !");               
-            }
-                                    
+                System.out.println("> Invalid input, Please answer (y/n) !");                                                               
         }
     }
         
