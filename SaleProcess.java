@@ -123,8 +123,7 @@ public class SaleProcess extends Cashier {
             }
         }
     }
-
-    //delete
+    
     public Product checkFuel(HashMap<String, Product> product_records, String checkProductInput) {
 
         checkProductInput = checkProductInput.trim().toUpperCase();

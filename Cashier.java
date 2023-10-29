@@ -13,11 +13,10 @@ public class Cashier implements Feature {
     private List<Product> carts;
     private double bill;
     private int size; // navigate how much the size of ArrayList carts
-    private Product product;  
+    Product product;  
     private double amountChange;
     private double fuelCost;
-
-
+    
     public Cashier() {
         this.carts = new ArrayList<>();
         this.size = 0;
@@ -26,7 +25,8 @@ public class Cashier implements Feature {
         this.product = null;
         this.fuelCost = 0;
     }
-              
+         
+    
     public double getChange() {
         return amountChange;
     }
